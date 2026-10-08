@@ -17,13 +17,22 @@
       width: 100vw;
       height: 100vh;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
-      /* 배경 이미지를 free trading.png로 변경 */
-      background: #000 url('free trading.png') no-repeat center center;
-      background-size: 100% 100%;
+      background: #000000; /* 완전한 검정 배경 */
       font-family: 'NeoDunggeunmoPro-Regular', sans-serif, monospace;
       overflow: hidden;
+    }
+
+    /* 전체 배치를 아래로 5커서(약 50px) 정도 내림 */
+    .top-image {
+      max-width: 420px;
+      width: 50vw;
+      height: auto;
+      margin-bottom: 5px;
+      object-fit: contain;
+      transform: translateY(-50px); /* 기존 -100px에서 -50px로 내려서 전체적으로 아래로 이동 */
     }
 
     .timer-container {
@@ -32,7 +41,7 @@
       align-items: center;
       justify-content: center;
       text-align: center;
-      margin-top: 40px;
+      transform: translateY(-10px); /* 타이머 전체 위치도 함께 아래로 조정 */
     }
 
     .timer-display {
@@ -42,12 +51,6 @@
       letter-spacing: 4px;
       margin-bottom: 24px;
       text-shadow: 0 0 20px rgba(255, 255, 255, 0.9), 0 0 40px rgba(255, 255, 255, 0.5);
-      cursor: pointer; /* 클릭 가능 표시 */
-      user-select: none;
-    }
-
-    .timer-display:hover {
-      opacity: 0.8;
     }
 
     .button-group {
@@ -89,9 +92,11 @@
 </head>
 <body>
 
+  <!-- 타이머 위쪽에 올라올 이미지 -->
+  <img src="text.png" alt="Text Image" class="top-image">
+
   <div class="timer-container">
-    <!-- 초기 타이머 시간 30분 표시 -->
-    <div id="timer" class="timer-display" title="클릭하면 전체화면이 됩니다">30:00</div>
+    <div id="timer" class="timer-display">30:00</div>
     <div class="button-group">
       <button id="startBtn" class="btn">START</button>
       <button id="pauseBtn" class="btn" disabled>PAUSE</button>
@@ -100,7 +105,7 @@
   </div>
 
   <script>
-    const INITIAL_SECONDS = 30 * 60; // 30분으로 변경
+    const INITIAL_SECONDS = 30 * 60;
     let timeLeft = INITIAL_SECONDS;
     let timerInterval = null;
 
@@ -151,23 +156,9 @@
       pauseBtn.disabled = true;
     }
 
-    // 타이머 숫자 클릭 시 전체화면 토글 기능
-    function toggleFullScreen() {
-      if (!document.fullscreenElement) {
-        document.documentElement.requestFullscreen().catch(err => {
-          alert(`전체화면 모드를 실행할 수 없습니다: ${err.message}`);
-        });
-      } else {
-        if (document.exitFullscreen) {
-          document.exitFullscreen();
-        }
-      }
-    }
-
     startBtn.addEventListener('click', startTimer);
     pauseBtn.addEventListener('click', pauseTimer);
     resetBtn.addEventListener('click', resetTimer);
-    timerDisplay.addEventListener('click', toggleFullScreen);
   </script>
 </body>
 </html>~
